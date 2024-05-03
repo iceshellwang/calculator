@@ -161,9 +161,28 @@ export const App: FunctionComponent = () => {
   }
 
   const onSquareBtnClick = () => {
+    // 0.4 square needs retest
     const value = Number(display)
     const res = value * value
     setDisplay(String(res))
+  }
+
+  const onPercentageBtnClick = () => {
+    const value = Number(display)
+    const res = value / 100
+    setDisplay(String(res))
+  }
+
+  const onReciprocalClick = () => {
+    const value = Number(display)
+    if (value == 0) {
+      setDisplay('Not a number')
+    }
+    // decial precision needs to fix
+    else {
+      const res = 1 / value
+      setDisplay(String(res))
+    }
   }
 
   const onAllClearButtonClick = () => {
@@ -214,6 +233,8 @@ export const App: FunctionComponent = () => {
           onOperatorButtonClick={onOperatorButtonClick}
           onChangeSignButtonClick={onChangeSignButtonClick}
           onSquareBtnClick={onSquareBtnClick}
+          onPercentageBtnClick={onPercentageBtnClick}
+          onReciprocalClick={onReciprocalClick}
           onEqualButtonClick={onEqualButtonClick}
           onAllClearButtonClick={onAllClearButtonClick}
           onClearEntryButtonClick={onClearEntryButtonClick}

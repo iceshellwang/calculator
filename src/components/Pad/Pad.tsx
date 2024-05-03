@@ -18,6 +18,8 @@ interface PadProps {
   onMemoryClearButtonClick: () => void
   onMemoryPlusButtonClick: () => void
   onMemoryMinusButtonClick: () => void
+  onPercentageBtnClick: () => void
+  onReciprocalClick: () => void
 }
 
 const StyledPad = styled.div`
@@ -31,6 +33,8 @@ export const Pad: FunctionComponent<PadProps> = ({
   onPointButtonClick,
   onOperatorButtonClick,
   onChangeSignButtonClick,
+  onReciprocalClick,
+  onPercentageBtnClick,
   onSquareBtnClick,
   onEqualButtonClick,
   onAllClearButtonClick,
@@ -91,7 +95,7 @@ export const Pad: FunctionComponent<PadProps> = ({
         M-
       </Button> */}
 
-      <Button color="red">
+      <Button color="red" onClick={onPercentageBtnClick}>
         %
       </Button>
       <Button onClick={onClearEntryButtonClick}>
@@ -103,10 +107,10 @@ export const Pad: FunctionComponent<PadProps> = ({
       
 
       <Button color="red">
-        X
+        close
       </Button>
       
-      <Button>
+      <Button onClick={onReciprocalClick}>
         1/x
       </Button>
       <Button onClick={onSquareBtnClick}>
