@@ -20,6 +20,7 @@ interface PadProps {
   onMemoryMinusButtonClick: () => void
   onPercentageBtnClick: () => void
   onReciprocalClick: () => void
+  onSquareRootBtnClick: () => void
 }
 
 const StyledPad = styled.div`
@@ -36,6 +37,7 @@ export const Pad: FunctionComponent<PadProps> = ({
   onReciprocalClick,
   onPercentageBtnClick,
   onSquareBtnClick,
+  onSquareRootBtnClick,
   onEqualButtonClick,
   onAllClearButtonClick,
   onClearEntryButtonClick,
@@ -45,7 +47,6 @@ export const Pad: FunctionComponent<PadProps> = ({
   onMemoryMinusButtonClick
 }) => {
   const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
-    console.log(keyCode)
     if (keyCode >= 48 && keyCode <= 57 && !shiftKey) {
       onDigitButtonClick((keyCode - 48) as Digit)
     } else if ((keyCode >= 96 && keyCode <= 105)) {
@@ -116,7 +117,7 @@ export const Pad: FunctionComponent<PadProps> = ({
       <Button onClick={onSquareBtnClick}>
         <img src={square}/>
       </Button>
-      <Button>
+      <Button onClick={onSquareRootBtnClick}>
         <img src={squareRoot}/>
       </Button>
 

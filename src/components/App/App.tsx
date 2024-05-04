@@ -2,6 +2,7 @@ import React, { Fragment, FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import Display from '../Display/Display'
 import Pad from '../Pad/Pad'
+import Modal from '../Modal/Modal'
 import { Digit, Operator } from '../../type/types';
 
 const StyledHeader = styled.div`
@@ -53,6 +54,7 @@ export const App: FunctionComponent = () => {
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(true)
   const [pendingOperator, setPendingOperator] = useState<Operator>()
   const [display, setDisplay] = useState<string>('0')
+  const [premiumOpen, setPremiumOpen] = useState<boolean>(false)
 
   const calculate = (rightOperand: number, pendingOperator: Operator): boolean => {
     let newResult = result
@@ -185,6 +187,12 @@ export const App: FunctionComponent = () => {
     }
   }
 
+  const onSquareRootBtnClick = () => {
+    const value = Number(display)
+    const res = Math.sqrt(value);
+    setDisplay(String(res))
+  }
+
   const onAllClearButtonClick = () => {
     setMemory(0)
     setResult(0)
@@ -218,32 +226,41 @@ export const App: FunctionComponent = () => {
     setWaitingForOperand(true)
   }
 
+  const handlePremiumOpen = () => {
+    setPremiumOpen(true);
+  }
+  const handlePremiumClose = () => {
+    setPremiumOpen(false);
+  }
   return (
     <>
       <StyledHeader>
         <StyledTitle>WEB CALCULATOR</StyledTitle>
-        <StyledButton>Go Premium</StyledButton>
+        <StyledButton onClick={handlePremiumOpen}>Go Premium</StyledButton>
       </StyledHeader>
       <StyledCalculator>
-      <StyledPanel>
-        <Display value={display} hasMemory={memory !== 0} expression={typeof pendingOperator !== 'undefined' ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />
-        <Pad
-          onDigitButtonClick={onDigitButtonClick}
-          onPointButtonClick={onPointButtonClick}
-          onOperatorButtonClick={onOperatorButtonClick}
-          onChangeSignButtonClick={onChangeSignButtonClick}
-          onSquareBtnClick={onSquareBtnClick}
-          onPercentageBtnClick={onPercentageBtnClick}
-          onReciprocalClick={onReciprocalClick}
-          onEqualButtonClick={onEqualButtonClick}
-          onAllClearButtonClick={onAllClearButtonClick}
-          onClearEntryButtonClick={onClearEntryButtonClick}
-          onMemoryRecallButtonClick={onMemoryRecallButtonClick}
-          onMemoryClearButtonClick={onMemoryClearButtonClick}
-          onMemoryPlusButtonClick={onMemoryPlusButtonClick}
-          onMemoryMinusButtonClick={onMemoryMinusButtonClick}
-        />
-      </StyledPanel>
+        
+        <Modal open={premiumOpen} handleModalClose={handlePremiumClose} />
+        <StyledPanel>
+          <Display value={display} hasMemory={memory !== 0} expression={typeof pendingOperator !== 'undefined' ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />
+          <Pad
+            onDigitButtonClick={onDigitButtonClick}
+            onPointButtonClick={onPointButtonClick}
+            onOperatorButtonClick={onOperatorButtonClick}
+            onChangeSignButtonClick={onChangeSignButtonClick}
+            onSquareBtnClick={onSquareBtnClick}
+            onPercentageBtnClick={onPercentageBtnClick}
+            onReciprocalClick={onReciprocalClick}
+            onSquareRootBtnClick={onSquareRootBtnClick}
+            onEqualButtonClick={onEqualButtonClick}
+            onAllClearButtonClick={onAllClearButtonClick}
+            onClearEntryButtonClick={onClearEntryButtonClick}
+            onMemoryRecallButtonClick={onMemoryRecallButtonClick}
+            onMemoryClearButtonClick={onMemoryClearButtonClick}
+            onMemoryPlusButtonClick={onMemoryPlusButtonClick}
+            onMemoryMinusButtonClick={onMemoryMinusButtonClick}
+          />
+        </StyledPanel>
       </StyledCalculator>
     </>
   )
