@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useState } from 'react'
+import React, {FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import Display from '../Display/Display'
 import Pad from '../Pad/Pad'
@@ -40,22 +40,19 @@ const StyledPanel = styled.div`
   top: 20%;
 `
 
-// position: relative;
-// position: absolute;
-//   left: 45%;
-//   top: 25%;
-// position: absolute;
-//   right: 0;
-//   top: 25%;
 export const App: FunctionComponent = () => {
   // Calculator's states
   const [memory, setMemory] = useState<number>(0)
   const [result, setResult] = useState<number>(0)
+  const [subscribeOpen, setSubscribeOpen] = useState<boolean>(false)
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(true)
   const [pendingOperator, setPendingOperator] = useState<Operator>()
   const [display, setDisplay] = useState<string>('0')
   const [premiumOpen, setPremiumOpen] = useState<boolean>(false)
 
+  const handleSubscribeOpen = () => {
+    setSubscribeOpen(true)
+  }
   const calculate = (rightOperand: number, pendingOperator: Operator): boolean => {
     let newResult = result
 
@@ -240,10 +237,11 @@ export const App: FunctionComponent = () => {
       </StyledHeader>
       <StyledCalculator>
         
-        <Modal open={premiumOpen} handleModalClose={handlePremiumClose} />
+        <Modal open={premiumOpen} handleModalClose={handlePremiumClose} handleSubscribeOpen={handleSubscribeOpen} />
         <StyledPanel>
           <Display value={display} hasMemory={memory !== 0} expression={typeof pendingOperator !== 'undefined' ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />
           <Pad
+            openPremiumLayout={subscribeOpen}
             onDigitButtonClick={onDigitButtonClick}
             onPointButtonClick={onPointButtonClick}
             onOperatorButtonClick={onOperatorButtonClick}

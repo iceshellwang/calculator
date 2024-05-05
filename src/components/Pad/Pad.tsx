@@ -21,6 +21,7 @@ interface PadProps {
   onPercentageBtnClick: () => void
   onReciprocalClick: () => void
   onSquareRootBtnClick: () => void
+  openPremiumLayout: boolean
 }
 
 const StyledPad = styled.div`
@@ -30,6 +31,7 @@ const StyledPad = styled.div`
 `
 
 export const Pad: FunctionComponent<PadProps> = ({
+  openPremiumLayout,
   onDigitButtonClick,
   onPointButtonClick,
   onOperatorButtonClick,
@@ -46,56 +48,25 @@ export const Pad: FunctionComponent<PadProps> = ({
   onMemoryPlusButtonClick,
   onMemoryMinusButtonClick
 }) => {
-  const handleKeyDown = ({ keyCode, shiftKey }: KeyboardEvent) => {
-    if (keyCode >= 48 && keyCode <= 57 && !shiftKey) {
-      onDigitButtonClick((keyCode - 48) as Digit)
-    } else if ((keyCode >= 96 && keyCode <= 105)) {
-      onDigitButtonClick((keyCode - 96) as Digit)
-    } else if (keyCode === 107 || (keyCode === 187 && shiftKey)) {
-      onOperatorButtonClick('+')
-    } else if (keyCode === 109 || keyCode === 189) {
-      onOperatorButtonClick('-')
-    } else if (keyCode === 106 || (keyCode === 56 && shiftKey)) {
-      onOperatorButtonClick('×')
-    } else if (keyCode === 111 || keyCode === 191) {
-      onOperatorButtonClick('÷')
-    } else if (keyCode === 13 || (keyCode === 187 && !shiftKey)) {
-      onEqualButtonClick()
-    } else if (keyCode === 46) {
-      onClearEntryButtonClick()
-    } else if (keyCode === 27) {
-      onAllClearButtonClick()
-    } else if (keyCode === 78) {
-      onChangeSignButtonClick()
-    } else if (keyCode === 80) {
-      onMemoryPlusButtonClick()
-    } else if (keyCode === 81) {
-      onMemoryMinusButtonClick()
-    } else if (keyCode === 82) {
-      onMemoryRecallButtonClick()
-    }
-  }
-
-  useEffect(() => {
-    document.body.addEventListener('keydown', handleKeyDown)
-    return () => document.body.removeEventListener('keydown', handleKeyDown)
-  })
 
   return (
     <StyledPad>
-      {/* <Button onClick={onMemoryRecallButtonClick}>
-        MR
-      </Button>
-      <Button onClick={onMemoryClearButtonClick}>
-        MC
-      </Button>
-      <Button onClick={onMemoryPlusButtonClick}>
-        M+
-      </Button>
-      <Button onClick={onMemoryMinusButtonClick}>
-        M-
-      </Button> */}
-
+      {openPremiumLayout && (
+        <>
+          <Button onClick={onMemoryRecallButtonClick}>
+            MR
+          </Button>
+          <Button onClick={onMemoryClearButtonClick}>
+            MC
+          </Button>
+          <Button onClick={onMemoryPlusButtonClick}>
+            M+
+          </Button>
+          <Button onClick={onMemoryMinusButtonClick}>
+            M-
+          </Button>
+      </>)
+      }
       <Button color="red" onClick={onPercentageBtnClick}>
         %
       </Button>
@@ -120,8 +91,6 @@ export const Pad: FunctionComponent<PadProps> = ({
       <Button onClick={onSquareRootBtnClick}>
         <img src={squareRoot}/>
       </Button>
-
-
 
 
       <Button color="dark" onClick={() => onOperatorButtonClick('÷')}>
