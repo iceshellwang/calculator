@@ -2,8 +2,6 @@ import React, { FunctionComponent, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '../Button/Button'
 import { Digit, Operator } from '../../type/types'
-import squareRoot from '../../Assets/square-root.png'
-import square from '../../Assets/square.png'
 
 interface PadProps {
   onDigitButtonClick: (digit: Digit) => void
@@ -21,6 +19,7 @@ interface PadProps {
   onPercentageBtnClick: () => void
   onReciprocalClick: () => void
   onSquareRootBtnClick: () => void
+  onDelClick: () => void
   openPremiumLayout: boolean
 }
 
@@ -46,7 +45,8 @@ export const Pad: FunctionComponent<PadProps> = ({
   onMemoryRecallButtonClick,
   onMemoryClearButtonClick,
   onMemoryPlusButtonClick,
-  onMemoryMinusButtonClick
+  onMemoryMinusButtonClick,
+  onDelClick,
 }) => {
 
   return (
@@ -78,18 +78,18 @@ export const Pad: FunctionComponent<PadProps> = ({
       </Button>
       
 
-      <Button color="red">
-        close
+      <Button color="red" onClick={onDelClick}>
+        del
       </Button>
       
       <Button onClick={onReciprocalClick}>
         1/x
       </Button>
       <Button onClick={onSquareBtnClick}>
-        <img src={square}/>
+        x^2
       </Button>
       <Button onClick={onSquareRootBtnClick}>
-        <img src={squareRoot}/>
+        sqrt
       </Button>
 
 

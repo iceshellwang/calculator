@@ -159,17 +159,29 @@ export const App: FunctionComponent = () => {
     setWaitingForOperand(true)
   }
 
+  const dataFormat = (res: number) => {
+    let format
+    if (String(res).length>10) {
+      format = res.toExponential();
+    }
+    else {
+      format = res;
+    }
+    return String(format);
+  }
   const onSquareBtnClick = () => {
     // 0.4 square needs retest
     const value = Number(display)
     const res = value * value
-    setDisplay(String(res))
+    const formatData = dataFormat(res);
+    setDisplay(String(formatData))
   }
 
   const onPercentageBtnClick = () => {
     const value = Number(display)
     const res = value / 100
-    setDisplay(String(res))
+    const formatData = dataFormat(res);
+    setDisplay(String(formatData))
   }
 
   const onReciprocalClick = () => {
@@ -177,17 +189,18 @@ export const App: FunctionComponent = () => {
     if (value == 0) {
       setDisplay('Not a number')
     }
-    // decial precision needs to fix
     else {
       const res = 1 / value
-      setDisplay(String(res))
+      const formatData = dataFormat(res);
+      setDisplay(String(formatData))
     }
   }
 
   const onSquareRootBtnClick = () => {
     const value = Number(display)
     const res = Math.sqrt(value);
-    setDisplay(String(res))
+    const formatData = dataFormat(res);
+    setDisplay(String(formatData))
   }
 
   const onAllClearButtonClick = () => {
@@ -229,6 +242,26 @@ export const App: FunctionComponent = () => {
   const handlePremiumClose = () => {
     setPremiumOpen(false);
   }
+
+  const onDelClick = () => {
+    const newDisplay = display.slice(0,-1);
+    if (pendingOperator) {
+      setDisplay(newDisplay)
+    }
+    else{
+      setDisplay(newDisplay || '0')
+    } 
+    // if (display) {
+    //   const newDisplay = display.slice(0,-1);
+    //   if (!newDisplay && pendingOperator) {
+    //     setDisplay(result + pendingOperator)
+    //   }
+    //   else {
+    //     setDisplay(newDisplay)
+    //   }
+    // }
+    
+  }
   return (
     <>
       <StyledHeader>
@@ -242,6 +275,7 @@ export const App: FunctionComponent = () => {
           <Display value={display} hasMemory={memory !== 0} expression={typeof pendingOperator !== 'undefined' ? `${result}${pendingOperator}${waitingForOperand ? '' : display}` : ''} />
           <Pad
             openPremiumLayout={subscribeOpen}
+            onDelClick={onDelClick}
             onDigitButtonClick={onDigitButtonClick}
             onPointButtonClick={onPointButtonClick}
             onOperatorButtonClick={onOperatorButtonClick}
