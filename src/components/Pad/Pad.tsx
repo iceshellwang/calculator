@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { Fragment, FunctionComponent, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '../Button/Button'
 import { Digit, Operator } from '../../type/types'
@@ -141,9 +141,10 @@ export const Pad: FunctionComponent<PadProps> = ({
       <Button onClick={onPointButtonClick}>
         .
       </Button>
-      <Button color="green" onClick={onEqualButtonClick}>
+      <Button  onClick={onEqualButtonClick} isCoffee>
         =
       </Button>
+      
     </StyledPad>
   )
 }

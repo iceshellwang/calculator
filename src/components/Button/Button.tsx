@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 
 interface ButtonProps {
   color?: 'red' | 'green' | 'dark'
-  isLarge?: boolean
+  isCoffee?: boolean
   onClick?: () => void
   children: ReactNode
 }
@@ -19,12 +19,14 @@ export const StyledButton = styled.button<ButtonProps>`
   border-radius: 0;
   padding-top: 1em;
   padding-bottom: 1em;
+  background-color: #fcdea0;
   transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
   ${({ color }) => colorToCss(color)}
-  ${({ isLarge }) =>
-    isLarge &&
+  ${({ isCoffee }) =>
+    isCoffee &&
     css`
-      grid-column-end: span 2;
+      background-color: #b56333;
+      color: #fff;
     `}
 
   position: relative;
@@ -59,9 +61,9 @@ export const StyledButton = styled.button<ButtonProps>`
   }
 `
 
-export const Button: FunctionComponent<ButtonProps> = ({ children, color, isLarge, onClick }) => {
+export const Button: FunctionComponent<ButtonProps> = ({ children, color, isCoffee, onClick }) => {
   return (
-    <StyledButton color={color} isLarge={isLarge} onClick={onClick}>
+    <StyledButton color={color} isCoffee={isCoffee} onClick={onClick}>
       {children}
     </StyledButton>
   )
